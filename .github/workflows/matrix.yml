@@ -4,18 +4,17 @@ on:
   push:
 
 jobs:
-  name: matrix jobs
-  strategy: 
-    matrix:
-      runner: [ubuntu latest, windows latest]
-      python-version: [3.11, 3.12, 3.13]
-      include:
-        - runner: macos-latest
-          python-version: 3.12
-      exclude:
-        - runner: windows-latest
-          python-version: 3.12
-  runs-on: ${{ matrix.runner ))
-  steps:
-    - run: echo this job will run in  python version ${{ matrix.python-version }}
-    
+  matrix-jobs:
+    runs-on: ${{ matrix.runner }}
+    strategy: 
+      matrix:
+        runner: [ubuntu-latest, windows-latest]
+        python-version: [3.11, 3.12, 3.13]
+        include:
+          - runner: macos-latest
+            python-version: 3.12
+        exclude:
+          - runner: windows-latest
+            python-version: 3.12
+    steps:
+      - run: echo "This job will run in Python version ${{ matrix.python-version }}"
